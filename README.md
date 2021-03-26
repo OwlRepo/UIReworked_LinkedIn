@@ -1,6 +1,6 @@
 # uireworked_linkedin
 
-This is a personal project that rebuilds the UI of LinkedIn mobile app using Flutter.
+This is a personal Mobile Application project that rebuilds the UI of LinkedIn mobile app using Flutter.
 
 ## Getting Started
 
