@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uireworked_linkedin/Providers/PostDataProvider.dart';
 import 'package:uireworked_linkedin/Widgets/HomeScreen/HomeTabWidgets/HomeTabFeedContainer.dart';
 import 'package:uireworked_linkedin/Widgets/HomeScreen/HomeTabWidgets/HomeTabHeader.dart';
 import 'package:uireworked_linkedin/Widgets/HomeScreen/HomeTabWidgets/HomeTabStories.dart';
@@ -9,9 +10,25 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  var _isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+    PostDataProvider.fetchPostData().then((value) {
+      return setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: double.infinity,
+      width: double.infinity,
       color: Colors.grey[200],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -24,20 +41,36 @@ class _HomeTabState extends State<HomeTab> {
           ),
           Expanded(
             flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                HomeTabStories(),
-                Divider(
-                  color: Colors.transparent,
-                ),
-                HomeTabFeedContainer(
-                  userName: 'LinkedIn',
-                  postDescription: 'Description',
-                  timeAndDate: '1h',
-                ),
-              ],
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  HomeTabStories(),
+                  Divider(
+                    color: Colors.transparent,
+                  ),
+                  Expanded(
+                    child: _isLoading
+                        ? CircularProgressIndicator()
+                        : ListView.builder(
+                            itemCount: PostDataProvider.postData.length,
+                            itemBuilder: (context, index) {
+                              return HomeTabFeedContainer(
+                                postDescription:
+                                    PostDataProvider.postData[index].title,
+                                postImageUrl:
+                                    PostDataProvider.postData[index].url,
+                                userPicture: PostDataProvider
+                                    .postData[index].thumbnailUrl,
+                                timeAndDate: '1h',
+                                userName: 'LinkedIn Account #$index',
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     precacheImage(AssetImage('assets/images/loginlogo.png'), context);
   }
 

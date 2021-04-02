@@ -16,15 +16,17 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.symmetric(
+              vertical: 10.0,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Spacer(),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 100.0,
+                    vertical: 50.0,
                   ),
                   child: Container(
                     child: Image.asset(
@@ -33,29 +35,43 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                LoginForm(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 1.0,
-                  ),
+                Expanded(
                   child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0),
+                      ),
+                    ),
+                    child: Column(
                       children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Forgot Password?'),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Create an Account?'),
+                        LoginForm(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 1.0,
+                          ),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text('Forgot Password?'),
+                                ),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text('Create an Account?'),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Spacer(),
               ],
             ),
           ),

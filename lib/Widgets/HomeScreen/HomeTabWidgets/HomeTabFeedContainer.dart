@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeTabFeedContainer extends StatefulWidget {
-  String userName;
-  String userPicture;
-  String timeAndDate;
-  String postDescription;
-  String postImageUrl;
+  final String userName;
+  final String userPicture;
+  final String timeAndDate;
+  final String postDescription;
+  final String postImageUrl;
   HomeTabFeedContainer({
     this.userName,
     this.userPicture,
@@ -35,8 +35,8 @@ class _HomeTabFeedContainerState extends State<HomeTabFeedContainer> {
                   child: SizedBox(
                     height: 40.0,
                     width: 40.0,
-                    child: Image.asset(
-                      'assets/images/splashlogo.png',
+                    child: Image.network(
+                      widget.userPicture,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -78,8 +78,8 @@ class _HomeTabFeedContainerState extends State<HomeTabFeedContainer> {
                   color: Colors.transparent,
                 ),
                 SizedBox(
-                  child: Image.asset(
-                    'assets/images/splashlogo.png',
+                  child: Image.network(
+                    widget.postImageUrl,
                   ),
                 )
               ],
