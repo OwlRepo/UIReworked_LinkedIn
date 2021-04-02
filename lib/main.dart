@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:uireworked_linkedin/Screens/HomeScreen.dart';
 import 'package:uireworked_linkedin/Screens/LoginScreen.dart';
@@ -23,35 +24,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'LinkedIn',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       initialRoute: SplashScreen.routeName,
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case SplashScreen.routeName:
-            return PageTransition(
-              child: SplashScreen(),
-              type: PageTransitionType.fade,
-            );
-            break;
-          case LoginScreen.routeName:
-            return PageTransition(
-              child: LoginScreen(),
-              type: PageTransitionType.fade,
-            );
-            break;
-          case HomeScreen.routeName:
-            return PageTransition(
-              child: HomeScreen(),
-              type: PageTransitionType.fade,
-            );
-            break;
-        }
-      },
+      getPages: [
+        GetPage(
+          name: SplashScreen.routeName,
+          page: () => SplashScreen(),
+        ),
+        GetPage(
+          name: LoginScreen.routeName,
+          page: () => LoginScreen(),
+          transition: Transition.fade,
+        ),
+        GetPage(
+          name: HomeScreen.routeName,
+          page: () => HomeScreen(),
+          transition: Transition.downToUp,
+          transitionDuration: Duration(milliseconds: 200),
+        ),
+      ],
     );
   }
 }

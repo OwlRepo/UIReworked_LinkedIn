@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uireworked_linkedin/Screens/HomeScreen.dart';
 
@@ -52,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(HomeScreen.routeName);
+                Get.toNamed(HomeScreen.routeName);
               },
               child: Text(
                 'LOGIN',

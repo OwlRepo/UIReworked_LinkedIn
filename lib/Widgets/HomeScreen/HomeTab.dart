@@ -44,31 +44,42 @@ class _HomeTabState extends State<HomeTab> {
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  HomeTabStories(),
-                  Divider(
-                    color: Colors.transparent,
-                  ),
-                  Expanded(
-                    child: _isLoading
-                        ? CircularProgressIndicator()
-                        : ListView.builder(
-                            itemCount: PostDataProvider.postData.length,
-                            itemBuilder: (context, index) {
-                              return HomeTabFeedContainer(
-                                postDescription:
-                                    PostDataProvider.postData[index].title,
-                                postImageUrl:
-                                    PostDataProvider.postData[index].url,
-                                userPicture: PostDataProvider
-                                    .postData[index].thumbnailUrl,
-                                timeAndDate: '1h',
-                                userName: 'LinkedIn Account #$index',
-                              );
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: () {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              return PostDataProvider.fetchPostData()
+                                  .then((value) {
+                                return setState(() {
+                                  _isLoading = false;
+                                });
+                              });
                             },
+                            child: ListView.builder(
+                              itemCount: PostDataProvider.postData.length,
+                              itemBuilder: (context, index) {
+                                return index == 0
+                                    ? HomeTabStories()
+                                    : HomeTabFeedContainer(
+                                        postDescription: PostDataProvider
+                                            .postData[index].title,
+                                        postImageUrl: PostDataProvider
+                                            .postData[index].url,
+                                        userPicture: PostDataProvider
+                                            .postData[index].thumbnailUrl,
+                                        timeAndDate: '1h',
+                                        userName: 'LinkedIn Account #$index',
+                                      );
+                              },
+                            ),
                           ),
-                  ),
+                        ),
                 ],
               ),
             ),
